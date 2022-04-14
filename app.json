@@ -1,4 +1,12 @@
 {
-  "name": "Cozette2",
-  "displayName": "Cozette2"
+  "name": "cozette",
+  "displayName": "cozette",
+  "expo": {
+    "name": "cozette",
+    "slug": "cozette",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
 }
