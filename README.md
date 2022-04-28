@@ -8,6 +8,7 @@ run npm install
 
 ```bash
 npm install
+npm install --global expo-cli
 ```
 ## Start project
 
