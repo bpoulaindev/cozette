@@ -1,33 +1,183 @@
-import React from 'react';
+import React, { ReactChildren, ReactElement, useState } from 'react';
 import { Text, View, StyleSheet, Pressable } from 'react-native';
-import {useTailwind} from 'tailwind-rn';
+import { useTailwind } from 'tailwind-rn';
+import { AppText } from './Text';
 
-interface ButtonProps {
-    buttonClasses?: string;
-    onPress?: () => void;
-    accessibilityLabel?: string;
-    contentClasses?: string;
-    content: string;
-    variant: 'text' | 'contained' | 'outlined';
-    color?: 'primary' | 'light' | 'dark'
+interface SimpleButtonProps {
+  buttonClasses?: string;
+  onPress?: () => void;
+  accessibilityLabel?: string;
+  contentClasses?: string;
+  content: string;
+  variant: 'text' | 'contained' | 'outlined';
+  color?: 'primary' | 'light' | 'dark';
+  buttonPressedClasses?: string;
+  contentPressedClasses?: string;
+  font?: string;
 }
 
-export const Button = ({buttonClasses, onPress, accessibilityLabel, contentClasses, content, variant, color}: ButtonProps) => {
-    const tailwind = useTailwind();
-    const buttonComputedClasses = {
-        primary: `${variant === 'contained' ? 'bg-primary-200' : 'bg-transparent'}`,
-        light: `${variant === 'contained' ? 'bg-primary-100' : 'bg-transparent'}`,
-        dark: `${variant === 'contained' ? 'bg-primary-300' : 'bg-transparent'}`
+export const SimpleButton = ({
+  buttonClasses,
+  onPress,
+  accessibilityLabel,
+  contentClasses,
+  content,
+  variant,
+  color,
+  buttonPressedClasses,
+  contentPressedClasses,
+  font
+}: SimpleButtonProps) => {
+  const tailwind = useTailwind();
+  const buttonComputedClasses = (pressed: boolean) => {
+    switch (color) {
+      case 'primary':
+        return `${variant === 'contained' ? 'bg-primary-200' : 'bg-transparent'} 
+                    ${variant === 'outlined' ? 'border-primary-200' : ''}
+                    ${
+                      pressed
+                        ? (variant === 'contained'
+                            ? buttonPressedClasses ?? 'bg-primary-700'
+                            : '') ||
+                          (variant === 'outlined' ? buttonPressedClasses ?? 'bg-primary-200' : '')
+                        : ''
+                    }`;
+      case 'light':
+        return `${variant === 'contained' ? 'bg-primary-100' : 'bg-transparent'}
+                ${variant === 'outlined' ? 'border-primary-100' : ''}
+                ${
+                  pressed
+                    ? (variant === 'contained' ? '' : buttonPressedClasses ?? 'bg-primary-300') &&
+                      (variant === 'outlined' ? buttonPressedClasses ?? 'bg-primary-100' : '')
+                    : ''
+                }`;
+      case 'dark':
+        return `${variant === 'contained' ? 'bg-primary-300' : 'bg-transparent'}
+                ${variant === 'outlined' ? 'border-primary-300' : ''} 
+                ${
+                  pressed
+                    ? (variant === 'contained' ? '' : buttonPressedClasses ?? 'bg-primary-700') &&
+                      (variant === 'outlined' ? buttonPressedClasses ?? 'bg-primary-300' : '')
+                    : ''
+                }`;
     }
-    const buttonInitialClasses = `inline-flex items-center px-2.5 py-1.5 border border-transparent rounded ${(variant !== 'text' && color) ? buttonComputedClasses[color] : ''}`
-    const contentComputedClasses = {
-        primary: `${variant === 'contained' ? 'text-white' : 'text-primary-200'}`,
-        light: `${variant === 'contained' ? 'text-white' : 'text-primary-100'}`,
-        dark: `${variant === 'contained' ? 'text-white' : 'text-primary-300'}`
+  };
+  const buttonInitialClasses = (pressed: boolean) =>
+    `flex items-center px-2.5 py-1.5 border border-transparent rounded ${
+      variant !== 'text' && color ? buttonComputedClasses(pressed) : ''
+    }`;
+  const contentComputedClasses = (pressed: boolean) => {
+    switch (color) {
+      case 'primary':
+        return `${variant === 'contained' ? 'text-white' : 'text-primary-200'}
+                ${
+                  pressed
+                    ? (variant === 'text' ? contentPressedClasses ?? 'text-primary-700' : '') ||
+                      (variant === 'outlined' ? contentPressedClasses ?? 'text-white' : '')
+                    : ''
+                }`;
+      case 'light':
+        return `${variant === 'contained' ? 'text-white' : 'text-primary-100'}
+                ${
+                  pressed
+                    ? (variant === 'text' ? contentPressedClasses ?? 'text-primary-300' : '') ||
+                      (variant === 'outlined' ? contentPressedClasses ?? 'text-white' : '')
+                    : ''
+                }`;
+      case 'dark':
+        return `${variant === 'contained' ? 'bg-primary-300' : 'bg-transparent'} 
+                ${
+                  pressed
+                    ? (variant === 'text' ? contentPressedClasses ?? 'text-primary-700' : '') ||
+                      (variant === 'outlined' ? contentPressedClasses ?? 'text-white' : '')
+                    : ''
+                }`;
     }
-    return ( 
-        <Pressable style={tailwind(`${buttonInitialClasses} ${buttonClasses || ''}`)} onPress={onPress} accessibilityLabel={accessibilityLabel}>
-            <Text style={tailwind(`${color ? contentComputedClasses[color] : ''} ${contentClasses || ''}`)}>{content}</Text>
-        </Pressable>
-    );
+  };
+  return (
+    <Pressable
+      style={({ pressed }) => tailwind(`${buttonInitialClasses(pressed)} ${buttonClasses ?? ''}`)}
+      onPress={onPress}
+      accessibilityLabel={accessibilityLabel}>
+      {({ pressed }) => (
+        <AppText
+          style={tailwind(
+            `${color ? contentComputedClasses(pressed) : ''} ${contentClasses ?? ''}`
+          )}
+          font={font}>
+          {content}
+        </AppText>
+      )}
+    </Pressable>
+  );
+};
+
+interface ComplexButtonProps {
+  buttonClasses?: string;
+  accessibilityLabel?: string;
+  variant: 'text' | 'contained' | 'outlined';
+  color?: 'primary' | 'light' | 'dark';
+  buttonPressedClasses?: string;
+  children: ReactElement;
+  onPress?: () => void;
 }
+
+export const ComplexButton = ({
+  buttonClasses,
+  accessibilityLabel,
+  variant,
+  color,
+  buttonPressedClasses,
+  children,
+  onPress
+}: ComplexButtonProps) => {
+  const tailwind = useTailwind();
+  const customOnPress = () => {
+    console.log('pressed !');
+  };
+  const buttonComputedClasses = (pressed: boolean) => {
+    switch (color) {
+      case 'primary':
+        return `${variant === 'contained' ? 'bg-primary-200' : 'bg-transparent'} 
+                    ${variant === 'outlined' ? 'border-primary-200' : ''} 
+                    ${
+                      pressed
+                        ? (variant === 'contained'
+                            ? buttonPressedClasses || 'bg-primary-700'
+                            : '') ||
+                          (variant === 'outlined' ? buttonPressedClasses || 'bg-primary-200' : '')
+                        : ''
+                    }`;
+      case 'light':
+        return `${variant === 'contained' ? 'bg-primary-100' : 'bg-transparent'}
+                ${variant === 'outlined' ? 'border-primary-100' : ''}
+                ${
+                  pressed
+                    ? (variant === 'contained' ? '' : buttonPressedClasses || 'bg-primary-300') &&
+                      (variant === 'outlined' ? buttonPressedClasses || 'bg-primary-100' : '')
+                    : ''
+                }`;
+      case 'dark':
+        return `${variant === 'contained' ? 'bg-primary-300' : 'bg-transparent'}
+                ${variant === 'outlined' ? 'border-primary-300' : ''} 
+                ${
+                  pressed
+                    ? (variant === 'contained' ? '' : buttonPressedClasses || 'bg-primary-700') &&
+                      (variant === 'outlined' ? buttonPressedClasses || 'bg-primary-300' : '')
+                    : ''
+                }`;
+    }
+  };
+  const buttonInitialClasses = (pressed: boolean) =>
+    `flex items-center px-2.5 py-1.5 border border-transparent rounded ${
+      variant !== 'text' && color ? buttonComputedClasses(pressed) : ''
+    }`;
+  return (
+    <Pressable
+      style={({ pressed }) => tailwind(`${buttonInitialClasses(pressed)} ${buttonClasses || ''}`)}
+      onPress={onPress}
+      accessibilityLabel={accessibilityLabel}>
+      {({ pressed }) => children}
+    </Pressable>
+  );
+};
