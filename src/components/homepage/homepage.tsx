@@ -24,18 +24,20 @@ export const HomePage = () => {
       </View>
       <View style={tailwind('flex flex-col items-center mx-2 w-full')}>
         <Image
-          style={tailwind('max-w-[75%] mt-4')}
+          style={tailwind('max-w-[65%] lg:max-w-[75%] mt-2 lg:mt-4')}
           resizeMode='contain'
           source={require('../../../assets/Cozette.png')}
         />
-        <View style={tailwind('-mt-1 p-0')}>
-          <AppText style={tailwind('text-2xl font-semibold text-center')} font='Superior'>
+        <View style={tailwind('-mt-1 lg:mt-2 p-0')}>
+          <AppText
+            style={tailwind('text-xl lg:text-2xl font-semibold text-center')}
+            font='Superior'>
             Bienvenue chez Cozette, {'\n'} les amoureux de Lille.
           </AppText>
         </View>
         <SimpleButton
           accessibilityLabel='Learn more about this purple button'
-          buttonClasses='mt-10 w-[300px] py-3'
+          buttonClasses='mt-5 lg:mt-10 w-[300px] py-3'
           contentClasses='text-base'
           content="S'inscrire gratuitement"
           variant='contained'
@@ -45,8 +47,8 @@ export const HomePage = () => {
         />
         <SimpleButton
           accessibilityLabel='Learn more about this purple button'
-          buttonClasses='mt-4 py-3'
-          contentClasses='font-bold text-base'
+          buttonClasses='lg:mt-4 mt-2 py-3'
+          contentClasses='text-base'
           content='Se connecter'
           variant='text'
           color='primary'

@@ -1,5 +1,5 @@
-import React, { ReactChildren, ReactElement, useState } from 'react';
-import { Text, View, StyleSheet, Pressable } from 'react-native';
+import React, { ReactElement } from 'react';
+import { Pressable } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { AppText } from './Text';
 

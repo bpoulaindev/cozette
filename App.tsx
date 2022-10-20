@@ -8,6 +8,7 @@ import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { NativeRouter, Route, Routes, Link } from 'react-router-native';
 import { Login } from './src/components/login/login';
+import { Home } from './src/components/homescreen/home';
 
 export const App: React.FC = () => {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -48,9 +49,10 @@ export const App: React.FC = () => {
         <TailwindProvider utilities={utilities}>
           <StatusBar hidden />
           <Routes>
-            <Route path='/register' element={<HomePage />} />
-            <Route path='/' element={<Register />} />
+            <Route path='/' element={<HomePage />} />
+            <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/home' element={<Home />} />
           </Routes>
         </TailwindProvider>
       </View>
