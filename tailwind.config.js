@@ -74,6 +74,7 @@ module.exports = {
         96: '24rem'
       },
       screens: {
+        md: { raw: '(min-height: 650px)' },
         lg: { raw: '(min-height: 800px)' },
         xl: { raw: '(min-height: 900px)' }
       }

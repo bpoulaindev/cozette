@@ -92,7 +92,7 @@ export const Login = () => {
                 ) : (
                   <ComplexButton
                     variant='text'
-                    buttonClasses='lg:-mt-1'
+                    buttonClasses='-mt-1 lg:mt-0'
                     onPress={() => setPasswordHidden(true)}>
                     <EyeSlashIcon color='#FF9270' size={20} />
                   </ComplexButton>
@@ -119,7 +119,7 @@ export const Login = () => {
             font='LatoBold'
             onPress={navigateToHome}
           />
-          <View style={tailwind('flex items-center justify-center')}>
+          <View style={tailwind('flex flex-row items-center justify-center')}>
             <AppText style={tailwind('text-sm lg:text-base')}>Pas encore de compte ?</AppText>
             <SimpleButton
               content='Inscrivez-vous ici'

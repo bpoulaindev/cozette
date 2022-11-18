@@ -37,49 +37,51 @@ export const Register = () => {
         style={tailwind('flex w-full justify-center items-center pb-8')}
         onLayout={(event) => setViewHeight(event.nativeEvent.layout.height)}>
         <Image
-          style={tailwind('mt-8 xl:mt-16 w-[150px]')}
+          style={tailwind('mt-2 lg:mt-10 xl:mt-16 w-[150px]')}
           resizeMode='contain'
           source={require('../../../assets/Cozette.png')}
         />
         <AppText
-          style={tailwind('text-2xl xl:text-2.5xl font-normal text-center mt-4 xl:mt-8')}
+          style={tailwind(
+            'text-xl md:text-2xl pt-1 lg:text-2.5xl font-normal text-center -mt-2 lg:mt-4 xl:mt-8'
+          )}
           font='SuperiorBold'>
           Bienvenue chez Cozette, {'\n'} Lille, vue par les lillois
         </AppText>
-        <View style={tailwind('mt-10 max-w-[80%] w-full flex flex-col')}>
+        <View style={tailwind('mt-5 lg:mt-10 max-w-[80%] w-full flex flex-col')}>
           <View style={tailwind('w-full')}>
-            <AppText style={tailwind('text-sm xl:text-base')} font='Lato'>
+            <AppText style={tailwind('text-sm lg:text-base')} font='Lato'>
               Votre adresse mail
             </AppText>
-            <View style={tailwind('block w-full rounded-md mt-2 bg-white w-full')}>
+            <View style={tailwind('w-full rounded-md mt-1/2 md:mt-2 bg-white w-full')}>
               <TextInput
-                style={tailwind('py-2 px-3 xl:py-4 xl:px-6 text-sm xl:text-base leading-5')}
+                style={tailwind('py-1 md:py-2 px-3 lg:py-4 lg:px-6 text-sm lg:text-base leading-5')}
                 value={mail}
                 placeholder='lillois@gmail.com'
                 onChange={(e: any) => setMail(e.target.value)}
               />
             </View>
           </View>
-          <View style={tailwind('w-full mt-5')}>
-            <AppText style={tailwind('text-sm xl:text-base')} font='Lato'>
+          <View style={tailwind('w-full mt-3 md:mt-5')}>
+            <AppText style={tailwind('text-sm lg:text-base')} font='Lato'>
               Votre date de naissance
             </AppText>
-            <View style={tailwind('w-full rounded-md mt-2 bg-white w-full')}>
+            <View style={tailwind('w-full rounded-md mt-1/2 md:mt-2 bg-white w-full')}>
               <TextInput
-                style={tailwind('py-2 px-3 xl:py-4 xl:px-6 text-sm xl:text-base leading-5')}
+                style={tailwind('py-1 md:py-2 px-3 lg:py-4 lg:px-6 text-sm lg:text-base leading-5')}
                 value={mail}
                 placeholder='JJ/MM/AAAA'
                 onChange={(e: any) => setMail(e.target.value)}
               />
             </View>
           </View>
-          <View style={tailwind('mt-5 w-full')}>
-            <AppText style={tailwind('text-sm xl:text-base font-bold')} font='Lato'>
+          <View style={tailwind('mt-3 md:mt-5 w-full')}>
+            <AppText style={tailwind('text-sm lg:text-base')} font='Lato'>
               Votre mot de passe
             </AppText>
-            <View style={tailwind('block w-full rounded-md mt-2 bg-white w-full relative')}>
+            <View style={tailwind('w-full rounded-md mt-1/2 md:mt-2 bg-white w-full relative')}>
               <TextInput
-                style={tailwind('py-2 px-3 xl:py-4 xl:px-6 text-sm xl:text-base leading-5')}
+                style={tailwind('py-1 md:py-2 px-3 lg:py-4 lg:px-6 text-sm lg:text-base leading-5')}
                 value={password}
                 secureTextEntry={passwordHidden}
                 placeholder='Evitez azerty1234'
@@ -87,19 +89,19 @@ export const Register = () => {
               />
               <View
                 style={tailwind(
-                  'pointer-events-none absolute inset-y-1.5 xl:inset-y-2.5 right-0 flex items-center pr-1.5 xl:pr-3'
+                  'pointer-events-none absolute inset-y-1.5 lg:inset-y-2.5 right-0 flex items-center pr-1.5 lg:pr-3'
                 )}>
                 {passwordHidden ? (
                   <ComplexButton
                     variant='text'
-                    buttonClasses='-mt-1 xl:mt-0'
+                    buttonClasses='-mt-1 lg:mt-0'
                     onPress={() => setPasswordHidden(false)}>
                     <EyeIcon color='#FF9270' size={20} />
                   </ComplexButton>
                 ) : (
                   <ComplexButton
                     variant='text'
-                    buttonClasses='xl:-mt-1'
+                    buttonClasses='-mt-1 lg:mt-0'
                     onPress={() => setPasswordHidden(true)}>
                     <EyeSlashIcon color='#FF9270' size={20} />
                   </ComplexButton>
@@ -111,18 +113,18 @@ export const Register = () => {
             content="S'inscrire"
             variant='contained'
             color='primary'
-            buttonClasses='mt-5 xl:mt-10'
-            contentClasses='text-sm xl:text-base p-1 xl:p-2'
+            buttonClasses='mt-3 md:mt-5 lg:mt-10'
+            contentClasses='text-sm lg:text-base p-1 lg:p-2'
             font='LatoBold'
             onPress={navigateToHome}
           />
           <View style={tailwind('flex flex-row items-center justify-center')}>
-            <AppText style={tailwind('text-base')}>Déjà un compte ?</AppText>
+            <AppText style={tailwind('text-sm lg:text-base')}>Déjà un compte ?</AppText>
             <SimpleButton
               content='Connectez-vous ici'
               variant='text'
               color='primary'
-              contentClasses='text-base'
+              contentClasses='text-sm lg:text-base'
               font='LatoBold'
               buttonClasses='px-1'
               onPress={navigateToLogin}
