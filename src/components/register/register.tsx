@@ -7,6 +7,8 @@ import { EyeIcon, EyeSlashIcon } from 'react-native-heroicons/solid';
 import { useNavigate } from 'react-router-native';
 import { Easing } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
+import axios from 'axios';
+import DatePicker from 'react-native-date-picker';
 
 export const Register = () => {
   const tailwind = useTailwind();
@@ -14,9 +16,28 @@ export const Register = () => {
   const [mail, setMail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordHidden, setPasswordHidden] = useState<boolean>(true);
+  const [birthDate, setBirthDate] = useState<string>('');
   const [viewHeight, setViewHeight] = useState<number>(0);
   const navigateToLogin = useCallback(() => navigate('/login', { replace: true }), [navigate]);
   const navigateToHome = useCallback(() => navigate('/home', { replace: true }), [navigate]);
+  console.log(mail, password, birthDate);
+  const register = useCallback(() => {
+    console.log('register', {
+      birthDate,
+      email: mail,
+      password,
+      passwordHidden
+    });
+    axios
+      .post('http://localhost:7001/v1/user/register', {
+        email: mail,
+        birthDate,
+        password
+      })
+      .then((res) => {
+        navigateToHome();
+      });
+  }, [birthDate, mail, password, navigateToHome]);
   const windowHeight = Dimensions.get('window').height;
   const windowWidth = Dimensions.get('window').width;
   const carouselHeight = windowHeight - viewHeight;
@@ -28,6 +49,9 @@ export const Register = () => {
     require('../../../assets/slider2.png'),
     require('../../../assets/slider3.png')
   ];
+  const [date, setDate] = useState(new Date());
+  const [open, setOpen] = useState(false);
+
   return (
     <View
       style={tailwind(
@@ -48,6 +72,18 @@ export const Register = () => {
           font='SuperiorBold'>
           Bienvenue chez Cozette, {'\n'} Lille, vue par les lillois
         </AppText>
+        <DatePicker
+          modal
+          open={open}
+          date={date}
+          onConfirm={(date: Date) => {
+            setOpen(false);
+            setDate(date);
+          }}
+          onCancel={() => {
+            setOpen(false);
+          }}
+        />
         <View style={tailwind('mt-5 lg:mt-10 max-w-[80%] w-full flex flex-col')}>
           <View style={tailwind('w-full')}>
             <AppText style={tailwind('text-sm lg:text-base')} font='Lato'>
@@ -58,7 +94,7 @@ export const Register = () => {
                 style={tailwind('py-1 md:py-2 px-3 lg:py-4 lg:px-6 text-sm lg:text-base leading-5')}
                 value={mail}
                 placeholder='lillois@gmail.com'
-                onChange={(e: any) => setMail(e.target.value)}
+                onChangeText={(text) => setMail(text)}
               />
             </View>
           </View>
@@ -66,12 +102,15 @@ export const Register = () => {
             <AppText style={tailwind('text-sm lg:text-base')} font='Lato'>
               Votre date de naissance
             </AppText>
+            <ComplexButton variant='text' onPress={() => setOpen(true)}>
+              <AppText font='Lato'>Teeest</AppText>
+            </ComplexButton>
             <View style={tailwind('w-full rounded-md mt-1/2 md:mt-2 bg-white w-full')}>
               <TextInput
                 style={tailwind('py-1 md:py-2 px-3 lg:py-4 lg:px-6 text-sm lg:text-base leading-5')}
-                value={mail}
+                value={birthDate}
                 placeholder='JJ/MM/AAAA'
-                onChange={(e: any) => setMail(e.target.value)}
+                onChangeText={(text) => setBirthDate(text)}
               />
             </View>
           </View>
@@ -85,7 +124,7 @@ export const Register = () => {
                 value={password}
                 secureTextEntry={passwordHidden}
                 placeholder='Evitez azerty1234'
-                onChange={(e: any) => setPassword(e.target.value)}
+                onChangeText={(text) => setPassword(text)}
               />
               <View
                 style={tailwind(
@@ -116,7 +155,7 @@ export const Register = () => {
             buttonClasses='mt-3 md:mt-5 lg:mt-10'
             contentClasses='text-sm lg:text-base p-1 lg:p-2'
             font='LatoBold'
-            onPress={navigateToHome}
+            onPress={register}
           />
           <View style={tailwind('flex flex-row items-center justify-center')}>
             <AppText style={tailwind('text-sm lg:text-base')}>Déjà un compte ?</AppText>

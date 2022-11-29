@@ -4,6 +4,7 @@ import { useTailwind } from 'tailwind-rn';
 import Svg, { Path } from 'react-native-svg';
 import { useLocation, useNavigate } from 'react-router-native';
 import { ChatBubbleLeftIcon, HomeIcon, MapPinIcon, UserIcon } from 'react-native-heroicons/solid';
+import axios from 'axios';
 
 const NavbarIcon: React.FC = () => {
   return (
@@ -29,6 +30,10 @@ export const Navbar = () => {
   const isChat = useMemo(() => location.pathname === '/chat', [location.pathname]);
   const isProfile = useMemo(() => location.pathname === '/profile', [location.pathname]);
   const navigateToHome = useCallback(() => navigate('/home', { replace: true }), [navigate]);
+  const testApi = async () => {
+    const test = await axios.get('http://localhost:7001/v1/user/all');
+    console.log('test api', test.data);
+  };
   if (bannedLocations.includes(location.pathname)) return null;
   return (
     <View
@@ -86,7 +91,7 @@ export const Navbar = () => {
               />
             )}
           </Pressable>
-          <Pressable onPress={navigateToHome} accessibilityLabel='HomeButton'>
+          <Pressable onPress={testApi} accessibilityLabel='HomeButton'>
             {({ pressed }) => (
               <UserIcon
                 style={tailwind(
