@@ -7,7 +7,7 @@ do (
     echo "Boot $i"
     xcrun simctl boot $i
     echo "Install Expo $i"
-    xcrun simctl install $i ~/.expo/ios-simulator-app-cache/Exponent-2.25.3.tar.app
+    xcrun simctl install $i ~/.expo/ios-simulator-app-cache/Exponent-2.26.4.tar.app
     echo "Lauch Expo $i"
     xcrun simctl openurl $i exp://127.0.0.1:19000 ) &
 done

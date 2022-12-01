@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-native';
 import { Easing } from 'react-native-reanimated';
 import Carousel from 'react-native-reanimated-carousel';
 import axios from 'axios';
-import DatePicker from 'react-native-date-picker';
 
 export const Register = () => {
   const tailwind = useTailwind();
@@ -72,18 +71,6 @@ export const Register = () => {
           font='SuperiorBold'>
           Bienvenue chez Cozette, {'\n'} Lille, vue par les lillois
         </AppText>
-        <DatePicker
-          modal
-          open={open}
-          date={date}
-          onConfirm={(date: Date) => {
-            setOpen(false);
-            setDate(date);
-          }}
-          onCancel={() => {
-            setOpen(false);
-          }}
-        />
         <View style={tailwind('mt-5 lg:mt-10 max-w-[80%] w-full flex flex-col')}>
           <View style={tailwind('w-full')}>
             <AppText style={tailwind('text-sm lg:text-base')} font='Lato'>

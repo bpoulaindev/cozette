@@ -2,6 +2,7 @@
   "name": "cozette",
   "displayName": "cozette",
   "expo": {
+    "jsEngine": "hermes",
     "name": "cozette",
     "slug": "cozette",
     "version": "1.0.0",
@@ -12,6 +13,12 @@
       "eas": {
         "projectId": "b1030b22-ec68-4980-ba64-b0a2e949ae0b"
       }
+    },
+    "ios": {
+      "bundleIdentifier": "org.name.cozette"
+    },
+    "android": {
+      "package": "org.name.cozette"
     }
   }
 }
