@@ -3,8 +3,8 @@
 #import <React/RCTBridgeDelegate.h>
 #import <UIKit/UIKit.h>
 
-#import <UMCore/UMAppDelegateWrapper.h>
-
-@interface AppDelegate : UMAppDelegateWrapper <RCTBridgeDelegate, EXUpdatesAppControllerDelegate>
+//#import <UMCore/UMAppDelegateWrapper.h>
+@interface AppDelegate : EXAppDelegateWrapper <RCTBridgeDelegate>
+//@interface AppDelegate : UMAppDelegateWrapper <RCTBridgeDelegate, EXUpdatesAppControllerDelegate>
 
 @end

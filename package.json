@@ -13,7 +13,8 @@
     "lint:fix": "eslint --fix",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "build:ios": "eas build --platform ios --local",
-    "build:android": "eas build --platform android --local"
+    "build:android": "eas build --platform android --local",
+    "niksamer": "react-native bundle --entry-file ./index.ts --platform ios --bundle-output ios/main.jsbundle"
   },
   "dependencies": {
     "@expo/config-plugins": "^5.0.2",
@@ -40,6 +41,7 @@
     "expo-modules-autolinking": "~1.0.0",
     "expo-modules-core": "~1.0.3",
     "expo-splash-screen": "~0.17.5",
+    "expo-status-bar": "~1.4.2",
     "expo-updates": "~0.15.6",
     "hermes-engine": "^0.11.0",
     "merge-stream": "^2.0.0",
@@ -57,15 +59,13 @@
     "react-native-screens": "~3.18.0",
     "react-native-shadow-2": "^7.0.6",
     "react-native-svg": "13.4.0",
-    "react-native-svg-uri": "^1.2.3",
     "react-native-web": "~0.18.7",
     "react-router-dom": "6",
     "react-router-native": "^6.4.1",
     "react-style-proptype": "^3.2.2",
     "tailwind-rn": "^4.2.0",
     "ultron": "^1.1.1",
-    "uuid": "^9.0.0",
-    "expo-status-bar": "~1.4.2"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
@@ -80,7 +80,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.8",
-    "jest": "^26.6.3",
+    "jest": "27.0.0",
     "jest-expo": "^47.0.0",
     "postcss": "^8.4.12",
     "prettier": "^2.7.1",
