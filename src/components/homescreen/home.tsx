@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { useTailwind } from 'tailwind-rn';
 import { View, Image, ScrollView, TextInput, Pressable } from 'react-native';
-import { SimpleButton } from '../../design/Buttons';
+import { ComplexButton, SimpleButton } from '../../design/Buttons';
 import { AppText } from '../../design/Text';
-import { MapPinIcon, StarIcon, ArrowDownTrayIcon } from 'react-native-heroicons/solid';
+import {
+  MapPinIcon,
+  StarIcon,
+  ArrowDownTrayIcon,
+  PaperAirplaneIcon,
+  ArrowPathIcon
+} from 'react-native-heroicons/solid';
 import {
   S3Client,
   ListObjectsCommand,
@@ -18,7 +24,8 @@ import * as FileSystem from 'expo-file-system';
 import axios from 'axios';
 import { ImagePickerResult } from 'expo-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+// @ts-ignore
+import { ACCESS_KEY_ID, SECRET_ACCESS_KEY, REGION, BUCKET_NAME } from '@env';
 export const Home = () => {
   const tailwind = useTailwind();
   const capsWidth = 70;
@@ -54,50 +61,43 @@ export const Home = () => {
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [fileBuffer, setFileBuffer] = useState<Blob>();
   const [fileType, setFileType] = useState<string>('');
-
-  // Replace REGION with the appropriate AWS Region, such as 'us-east-1'.
-  const region = 'eu-west-3';
-  const client = new S3Client({
-    region,
-    credentials: {
-      accessKeyId: 'AKIAZCFFD2IVEPK2RUVR',
-      secretAccessKey: 'jezQAiSladAAvrizOnhVmyPGQCE0DbIDhkzuGspX'
-    }
-    /*credentials: fromCognitoIdentityPool({
-      client: new CognitoIdentityClient({ region }),
-      // Replace IDENTITY_POOL_ID with an appropriate Amazon Cognito Identity Pool ID for, such as 'us-east-1:xxxxxx-xxx-4103-9936-b52exxxxfd6'.
-      identityPoolId: 'us-east-1:34987c2b-0f76-4347-a742-d4b3bfae065d'
-    }) */
-  });
   const [listBucketFiles, setListBucketFiles] = useState<unknown[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // Replace REGION with the appropriate AWS Region, such as 'us-east-1'.
+  const client = new S3Client({
+    region: REGION,
+    credentials: {
+      accessKeyId: ACCESS_KEY_ID,
+      secretAccessKey: SECRET_ACCESS_KEY
+    }
+  });
   const putBucketObject = async () => {
+    setIsLoading(true);
     setSuccessMsg('');
     setErrorMsg('');
-
     try {
       await client.send(
         new PutObjectCommand({
-          Body: `${fileBuffer || fileName}.${fileType}`,
-          Bucket: 'mds-cloudcomputing',
-          Key: fileName
+          Body: fileBuffer,
+          Bucket: BUCKET_NAME,
+          Key: `${fileName}.${fileType}`
         })
       );
       setSuccessMsg(`File has been sent.`);
       setFileName('');
+      setIsLoading(false);
     } catch (e: any) {
       setErrorMsg(e);
+      setIsLoading(false);
     }
   };
   const listBucket = async () => {
     try {
-      const listBucket = await client.send(
-        new ListObjectsCommand({ Bucket: 'mds-cloudcomputing' })
-      );
+      const listBucket = await client.send(new ListObjectsCommand({ Bucket: BUCKET_NAME }));
       setSuccessMsg(
         `Number of files: ${listBucket.Contents?.length ? listBucket.Contents.length - 1 : 0}`
       );
       setListBucketFiles(listBucket.Contents ?? []);
-      console.log(listBucket);
     } catch (e: any) {
       setErrorMsg(e);
     }
@@ -106,15 +106,11 @@ export const Home = () => {
     try {
       const data = await client.send(
         new GetObjectCommand({
-          Bucket: 'mds-cloudcomputing',
+          Bucket: BUCKET_NAME,
           Key: key
         })
       );
-      // const stream = await data.Body.transformToString();
-      console.log('test2', data);
-      // console.log(response);
-      // const file = await fetch(response);
-      // console.log('object', object);
+      console.log('hello', data.ContentType);
     } catch (e: any) {
       setErrorMsg(e);
     }
@@ -132,15 +128,16 @@ export const Home = () => {
     const result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All
     });
-    console.log(result);
     await uploadPicture(result);
   };
   const uploadPicture = async (result: ImagePickerResult) => {
     if (!result.cancelled && result.assets) {
-      const picture = await axios.get(result.assets[0].uri);
-      setFileBuffer(picture.data);
-      setFileType(picture.data.type);
-      console.log(result.assets[0].uri);
+      // const picture = await axios.get(result.assets[0].uri);
+      const resp = await fetch(result.assets[0].uri); //
+      const imageBody = await resp.blob(); // conv uri to blob
+      setFileBuffer(imageBody);
+      setFileType(result.assets[0].uri.split('.').pop() ?? '');
+      // console.log(result.assets[0].uri);
     }
   };
   const downloadFile = async (uri: string) => {
@@ -174,7 +171,7 @@ export const Home = () => {
             source={require('../../../assets/Cozette.png')}
           />
           <AppText style={tailwind('text-3xl font-normal text-center xl:mt-2')} font='SuperiorBold'>
-            Bonjour, John
+            Bonjour, Baptiste
           </AppText>
           <View style={tailwind('flex flex-col w-[85%] items-start mt-4')}>
             <AppText style={tailwind('text-xl font-normal text-center')} font='Superior'>
@@ -198,31 +195,35 @@ export const Home = () => {
             </View>
           </View>
         </View>
-        <View style={tailwind('mt-4 lg:mt-8 max-w-[85%] w-full flex flex-col')}>
+        <View style={tailwind('max-w-[85%] w-full flex flex-col')}>
           <View style={tailwind('flex w-full my-4')}>
-            <AppText style={{ color: 'green' }}>
-              {successMsg ? `Success: ${successMsg}` : ``}
-            </AppText>
-            <AppText style={{ color: 'red' }}>{errorMsg ? `Error: ${errorMsg}` : ``}</AppText>
+            {successMsg && <AppText style={tailwind('text-green-500')}>{successMsg}</AppText>}
+            {errorMsg && <AppText style={tailwind('text-red-500')}>{errorMsg}</AppText>}
             <View>
-              <View style={tailwind('w-full rounded-md mt-1/2 md:mt-2 bg-white w-full')}>
-                <TextInput
-                  style={tailwind(
-                    'py-1 md:py-2 px-3 lg:py-4 lg:px-6 text-sm lg:text-base leading-5'
+              <View style={tailwind('flex flex-row justify-between w-full mt-4')}>
+                <View style={tailwind('w-5/6 rounded-md bg-white')}>
+                  <TextInput
+                    style={tailwind(
+                      'py-1 md:py-2 px-3 lg:py-4 lg:px-6 text-sm lg:text-base leading-5'
+                    )}
+                    onChangeText={(text) => setFileName(text)}
+                    autoCapitalize={'none'}
+                    value={fileName}
+                    placeholder={'Enter File Name'}
+                  />
+                </View>
+                <ComplexButton
+                  buttonClasses=' flex items-center justify-center ml-1'
+                  variant='contained'
+                  color={isLoading ? 'light' : 'primary'}
+                  onPress={putBucketObject}>
+                  {isLoading ? (
+                    <ArrowPathIcon style={tailwind('max-w-[20px] max-h-[20px] text-white')} />
+                  ) : (
+                    <PaperAirplaneIcon style={tailwind('max-w-[20px] max-h-[20px] text-white')} />
                   )}
-                  onChangeText={(text) => setFileName(text)}
-                  autoCapitalize={'none'}
-                  value={fileName}
-                  placeholder={'Enter File Name'}
-                />
+                </ComplexButton>
               </View>
-              <SimpleButton
-                buttonClasses='mt-2'
-                variant='contained'
-                color='primary'
-                content='Put Bucket object'
-                onPress={putBucketObject}
-              />
               <SimpleButton
                 buttonClasses='mt-2'
                 variant='contained'

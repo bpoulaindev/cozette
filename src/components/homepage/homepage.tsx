@@ -13,6 +13,7 @@ export const HomePage = () => {
     [navigate]
   );
   const navigateToLogin = useCallback(() => navigate('/login', { replace: true }), [navigate]);
+  const navigateToEC2 = useCallback(() => navigate('/EC2', { replace: true }), [navigate]);
   return (
     <View style={tailwind('flex flex-col h-full items-center z-50 w-full')}>
       <View style={tailwind('flex w-full max-w-[100%] max-h-[50%] h-[50%] bg-primary-200 z-10')}>
@@ -53,6 +54,16 @@ export const HomePage = () => {
           variant='text'
           color='primary'
           onPress={navigateToLogin}
+          font='LatoBold'
+        />
+        <SimpleButton
+          accessibilityLabel='Learn more about this purple button'
+          buttonClasses='lg:mt-4 mt-2 py-3'
+          contentClasses='text-base'
+          content='Lesgo EC2'
+          variant='text'
+          color='primary'
+          onPress={navigateToEC2}
           font='LatoBold'
         />
       </View>

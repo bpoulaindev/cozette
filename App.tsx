@@ -12,6 +12,7 @@ import { Login } from './src/components/login/login';
 import { Home } from './src/components/homescreen/home';
 import { Navbar } from './src/design/Navbar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { Ec2 } from './src/components/ec2/ec2';
 
 export const App: React.FC = () => {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -58,6 +59,7 @@ export const App: React.FC = () => {
                 <Route path='/register' element={<Register />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/home' element={<Home />} />
+                <Route path='/EC2' element={<Ec2 />} />
               </Routes>
               <Navbar />
             </>
