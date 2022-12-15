@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0878C30F293A75DA00D8D31E /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = 0878C311293A75DA00D8D31E /* main.jsbundle */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -20,7 +19,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0878C310293A75DA00D8D31E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text; name = Base; path = Base.lproj/main.jsbundle; sourceTree = "<group>"; };
 		137C6407EA1B4D4EB57F49C8 /* noop-file.swift */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.swift; name = "noop-file.swift"; path = "cozette/noop-file.swift"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* cozette.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cozette.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = cozette/AppDelegate.h; sourceTree = "<group>"; };
@@ -56,7 +54,6 @@
 			isa = PBXGroup;
 			children = (
 				BB2F792B24A3F905000567C9 /* Supporting */,
-				0878C311293A75DA00D8D31E /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -205,7 +202,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0878C30F293A75DA00D8D31E /* main.jsbundle in Resources */,
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
@@ -228,7 +224,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd $PROJECT_DIR/..\nexport NODE_BINARY=node\n./node_modules/react-native/scripts/react-native-xcode.sh\n./node_modules/expo-constants/scripts/get-app-config-ios.sh\n./node_modules/expo-updates/scripts/create-manifest-ios.sh\n./index.ts\n";
+			shellScript = "export NODE_BINARY=node\n./node_modules/react-native/scripts/react-native-xcode.sh\n./node_modules/expo-constants/scripts/get-app-config-ios.sh\n./node_modules/expo-updates/scripts/create-manifest-ios.sh\n./index.ts\n";
 		};
 		36B6B5CE8ACF89F7846A7558 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -332,14 +328,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		0878C311293A75DA00D8D31E /* main.jsbundle */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0878C310293A75DA00D8D31E /* Base */,
-			);
-			name = main.jsbundle;
-			sourceTree = "<group>";
-		};
 		13B07FB11A68108700A75B9A /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -467,6 +455,8 @@
 				ONLY_ACTIVE_ARCH = YES;
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
+				WARNING_CFLAGS = "-Wno-nullability-completeness";
+				"WARNING_CFLAGS[arch=*]" = "-Wno-nullability-completeness";
 			};
 			name = Debug;
 		};
@@ -518,6 +508,7 @@
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
+				WARNING_CFLAGS = "-Wno-nullability-completeness";
 			};
 			name = Release;
 		};

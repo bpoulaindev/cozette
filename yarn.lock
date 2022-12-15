@@ -1161,13 +1161,13 @@
     mv "~2"
     safe-json-stringify "~1"
 
-"@expo/cli@0.4.10":
-  version "0.4.10"
-  resolved "https://registry.yarnpkg.com/@expo/cli/-/cli-0.4.10.tgz#e965b97888c83cecdaddbb8dca3d5827643a0f36"
-  integrity sha512-c8NJOVa5b8g9CYj8ahdaN21cVE2wPwUaFrtTE0kLeRR5ASy8reWLFEOcstEtt6eufdcN/uGgBWQ0FLovgLZuzw==
+"@expo/cli@0.4.9":
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/@expo/cli/-/cli-0.4.9.tgz#24a2714b11a918b588138220c79b4ec9b553adba"
+  integrity sha512-/9ljfK4eMWXb97XWSJgxcSWpuKXABHFd7Q8Kswp24B2Y5w4MIyaEPhSErIJYTq/FJH7p98Ti1zhk/PhBL0vVTw==
   dependencies:
     "@babel/runtime" "^7.14.0"
-    "@expo/code-signing-certificates" "0.0.5"
+    "@expo/code-signing-certificates" "^0.0.2"
     "@expo/config" "~7.0.2"
     "@expo/config-plugins" "~5.0.3"
     "@expo/dev-server" "0.1.123"
@@ -1240,6 +1240,14 @@
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/@expo/code-signing-certificates/-/code-signing-certificates-0.0.5.tgz#a693ff684fb20c4725dade4b88a6a9f96b02496c"
   integrity sha512-BNhXkY1bblxKZpltzAx98G2Egj9g1Q+JRcvR7E99DOj862FTCX+ZPsAUtPTr7aHxwtrL7+fL3r0JSmM9kBm+Bw==
+  dependencies:
+    node-forge "^1.2.1"
+    nullthrows "^1.1.1"
+
+"@expo/code-signing-certificates@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@expo/code-signing-certificates/-/code-signing-certificates-0.0.2.tgz#65cd615800e6724b54831c966dd1a90145017246"
+  integrity sha512-vnPHFjwOqxQ1VLztktY+fYCfwvLzjqpzKn09rchcQE7Sdf0wtW5fFtIZBEFOOY5wasp8tXSnp627zrAwazPHzg==
   dependencies:
     node-forge "^1.2.1"
     nullthrows "^1.1.1"
@@ -1413,10 +1421,10 @@
     joi "^17.4.2"
     semver "^7.3.5"
 
-"@expo/eas-json@2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@expo/eas-json/-/eas-json-2.8.0.tgz#0f79fa550de414e80906ede83588ae0f3f2ab401"
-  integrity sha512-9MUWyYy2Gm1jY4p5g+h3raaX3+0OIvS4U2162O1gSSQN7O4mczFiHq1n/jJLulEl8hm9gvK6kdSeeCRSyvvKhA==
+"@expo/eas-json@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@expo/eas-json/-/eas-json-3.0.0.tgz#1b84307b14ef880e1a089c4f53e2fceed015a582"
+  integrity sha512-+Fp3rbQ+iQp+uWRUF5iQATPGiiIjpC0W4ywXNVvc5FjOKcWd4sBRxsSJaxc1ugTL3izO7DYJH+K8B8Oha5DD2w==
   dependencies:
     "@babel/code-frame" "7.18.6"
     "@expo/eas-build-job" "0.2.97"
@@ -5973,10 +5981,10 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
 
-eas-cli@^2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/eas-cli/-/eas-cli-2.8.0.tgz#bede7b8fe41f25eb011fcbbcc2e62b91f9afe02b"
-  integrity sha512-IdrIAsLxwmt8Nv2LPh9KfKI63GB4vCs+Z6uWK74zOABm8+swfsxNDn3vsQYEZnm1gWN3Vgj8paMFoMbbjRvOVA==
+eas-cli@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/eas-cli/-/eas-cli-3.0.0.tgz#3c0fcb465a18ac2b42d53906e489dc4910bf325f"
+  integrity sha512-MI9NZ/DO9k62kLsEeRmp0k1/yafGLaCog1FC4txk0xN/1nUjdXdnMYhPUC9JT3Ok9nYx2s5KB3A/Qav8/LBiOA==
   dependencies:
     "@expo/apple-utils" "0.0.0-alpha.34"
     "@expo/code-signing-certificates" "0.0.3"
@@ -5984,7 +5992,7 @@ eas-cli@^2.8.0:
     "@expo/config-plugins" "5.0.1"
     "@expo/config-types" "46.0.2"
     "@expo/eas-build-job" "0.2.97"
-    "@expo/eas-json" "2.8.0"
+    "@expo/eas-json" "3.0.0"
     "@expo/json-file" "8.2.36"
     "@expo/multipart-body-parser" "1.1.0"
     "@expo/osascript" "2.0.33"
@@ -6881,13 +6889,13 @@ expo-updates@~0.15.6:
     resolve-from "^5.0.0"
     uuid "^3.4.0"
 
-expo@^47.0.0:
-  version "47.0.8"
-  resolved "https://registry.yarnpkg.com/expo/-/expo-47.0.8.tgz#80390fd63f8305103445069c647011915f7c32dd"
-  integrity sha512-PGNCIvrnYwHH4TDFsVocq/xhWZ5DW8N3bLkZJPZZgX6VgjtVLNsbZ+0lm1inLCZHP+6xSpSKRccjGHO/QQoMBQ==
+expo@47.0.6:
+  version "47.0.6"
+  resolved "https://registry.yarnpkg.com/expo/-/expo-47.0.6.tgz#4436bf0f667b6282f9189e987ddf67cd64807140"
+  integrity sha512-XFcTnkOWEbc5mbrpdgIkPq3Heuem+8OErdjnWshwiDtaCdqK0EKToJtE2ufhCxb/RzfeJ5k07mpk+8CRRayi4w==
   dependencies:
     "@babel/runtime" "^7.14.0"
-    "@expo/cli" "0.4.10"
+    "@expo/cli" "0.4.9"
     "@expo/config" "7.0.3"
     "@expo/config-plugins" "5.0.4"
     "@expo/vector-icons" "^13.0.0"
